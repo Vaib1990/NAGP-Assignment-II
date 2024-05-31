@@ -1,0 +1,13 @@
+# Defines a Kubernetes Service named 'postgres-db-service', functioning as a headless service for PostgreSQL.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db-service          # Name of the Service
+spec:
+  clusterIP: None                    # Specifies a headless service with no cluster IP
+  selector:
+    app: postgres-db                 # Selector to match pods labeled with 'app: postgres-db'
+  ports:
+  - port: 5432                       # Port exposed by the Service
+    targetPort: postgres             # Port on pods to which traffic is forwarded

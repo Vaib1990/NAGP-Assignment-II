@@ -1,0 +1,39 @@
+# Defines a Kubernetes StatefulSet named 'postgres-db' to manage a PostgreSQL database.
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-db                     # Name of the StatefulSet
+spec:
+  serviceName: "postgres-db-service"    # Name of the associated headless service
+  replicas: 1                           # Number of replicas (pods/instances)
+  selector:
+    matchLabels:
+      app: postgres-db                  # Selector to match pods labeled with 'app: postgres-db'
+  template:
+    metadata:
+      labels:
+        app: postgres-db                # Label for the pod template
+    spec:
+      containers:
+      - name: postgres-db               # Container name
+        image: postgres:15.1            # Docker image for PostgreSQL
+        ports:
+        - containerPort: 5432           # Port exposed by the container
+          name: postgres                # Name of the port
+        envFrom:
+        - configMapRef:
+            name: postgres-config       # Inject environment variables from a ConfigMap
+        - secretRef:
+            name: postgres-secrets      # Inject environment variables from a Secret
+        volumeMounts:
+        - name: postgres-data           # Volume mount for data persistence
+          mountPath: /var/lib/postgresql/data 
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data               # Name of the volume claim template
+    spec:
+      accessModes: ["ReadWriteOnce"]    # Access mode for the volume
+      resources:
+        requests:
+          storage: 2Gi                  # Storage capacity requested for the volume

@@ -1,0 +1,10 @@
+# Defines a Kubernetes ConfigMap named 'postgres-config' containing configuration data for the PostgreSQL database.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config              # Name of the ConfigMap
+data:
+  POSTGRES_HOST: db-service          # PostgreSQL host
+  POSTGRES_PORT: "5432"              # PostgreSQL port
+  POSTGRES_DB: mydb                  # PostgreSQL database name

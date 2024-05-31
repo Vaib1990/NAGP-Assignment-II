@@ -1,0 +1,24 @@
+# This HorizontalPodAutoscaler (HPA) configuration automatically adjusts the number of pods in the
+# 'api-service' deployment based on CPU utilization. The HPA ensures that the number of replicas
+# remains between a minimum of 3 and a maximum of 6. The target is to maintain the average CPU
+# utilization at 20%. This setup helps in optimizing resource usage and maintaining performance
+# under varying loads by scaling the number of pods up or down as needed.
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-service-hpa                # Name of the HPA
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1                # API version of the target resource
+    kind: Deployment                   # Kind of the target resource
+    name: api-service                  # Name of the target deployment
+  minReplicas: 3                       # Minimum number of replicas
+  maxReplicas: 6                       # Maximum number of replicas
+  metrics:
+  - type: Resource                     # Type of metric used for scaling
+    resource:
+      name: cpu                        # Resource metric name
+      target:
+        type: Utilization              # Metric target type
+        averageUtilization: 20         # Target average CPU utilization percentage

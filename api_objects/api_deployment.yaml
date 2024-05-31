@@ -1,0 +1,35 @@
+# This YAML file defines a Kubernetes Deployment for the api-service application.
+# It specifies 3 replicas of the application, and includes configuration for
+# environment variables sourced from a secret and a ConfigMap.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-service  # Name of the deployment
+spec:
+  replicas: 3  # Number of Pod Replicas
+  selector:
+    matchLabels:
+      app: api-service  # Selector to match pods with label 'app: api-service'
+  template:
+    metadata:
+      labels:
+        app: api-service  # Label for the pod template
+    spec:
+      containers:
+      - name: api-service
+        image: vsingham/api-service:2.0  # Pulled image from docker hub
+        ports:
+        - containerPort: 5000  # Container port exposed
+        resources:
+          limits:
+            cpu: 500m   # Maximum CPU limit
+            memory: 200Mi  # Maximum memory limit
+          requests:
+            cpu: 400m   # Maximum CPU Request
+            memory: 175Mi  # Maximum memory Request
+        envFrom:
+        - secretRef:
+            name: postgres-secrets  # Inject environment variables from a secret
+        - configMapRef:
+            name: postgres-config  # Inject environment variables from a Config Maps
