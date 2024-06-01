@@ -143,7 +143,7 @@ NAGP-Assignment-II/
 * **Code Repository:** https://github.com/Vaib1990/NAGP-Assignment-II.git
 * **Docker Image (API Service):** https://hub.docker.com/r/vsingham/api-service/tags
 * **Service API Endpoint:** http://localhost:9090/items
-* **Screen Recording Demo:** 
+* **Screen Recording Demo:** https://drive.google.com/file/d/1_HM7W4rEiNFb8mBrjz7HerFJnO3xgXfo/view?usp=sharing
 
 ## Notes
 
